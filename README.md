@@ -20,4 +20,5 @@
 - 
 ### 우분투 SSH 설정
 - 설치 : sudo apt-get install openssh-server
-- 확인 : sdo systemctl status sshd
+- 확인 : sudo systemctl status sshd
+- 접속 : ssh 사용자ID@서버IP (Ex. ssh choi@192.168.64.2)
