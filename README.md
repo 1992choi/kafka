@@ -13,12 +13,11 @@
 
 <br><br>
 
-## 명령어
-### Head
-- Body
-
-<br><br>
-
-## 기타
+## 설치 및 실행 명령어
 ### 우분투 설치
 - https://velog.io/@suzu11/Mac-M1-%EC%97%90%EC%84%9C-%EC%9A%B0%EB%B6%84%ED%88%AC-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-UTM
+### 우분투 고정 IP 할당
+- 
+### 우분투 SSH 설정
+- 설치 : sudo apt-get install openssh-server
+- 확인 : sdo systemctl status sshd
