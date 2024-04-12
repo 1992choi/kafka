@@ -16,3 +16,9 @@
 ## 명령어
 ### Head
 - Body
+
+<br><br>
+
+## 기타
+### 우분투 설치
+- https://velog.io/@suzu11/Mac-M1-%EC%97%90%EC%84%9C-%EC%9A%B0%EB%B6%84%ED%88%AC-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-UTM
