@@ -3,8 +3,8 @@
 <br><br>
 
 ## 개념 정리
+![image](https://github.com/Young-Geun/Kafka/assets/27760576/e5d88001-3adf-4b47-954a-eae9f5e125da)
 ### Topic
-- ![image](https://github.com/Young-Geun/Kafka/assets/27760576/e5d88001-3adf-4b47-954a-eae9f5e125da)
 - Topic은 파티션으로 구성된 일련의 로그 파일이다.
 - RDBMS의 테이블과 유사항 기능이다.
 - Key와 Value 기반의 메시지 구조이며, Value는 어떠한 타입도 가능하다.
