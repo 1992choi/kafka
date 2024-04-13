@@ -43,6 +43,11 @@
   - .bashrc 수정
     -  export CONFLUENT_HOME=/home/choi/confluent
     -  export PATH=.:$PATH:$CONFLUENT_HOME/bin
+- Kakfa 설정 변경
+  - {Confluent Home}/etc/kafka/server.properties
+    - log.dirs=/home/choi/data/kafka-logs
+  - {Confluent Home}/etc/kafka/zookeeper.properties
+    - dataDir=/home/choi/data/zookeeper
 
 ### Kafka 명령어
 - Zookeeper 실행
