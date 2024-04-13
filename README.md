@@ -22,3 +22,12 @@
 - 설치 : sudo apt-get install openssh-server
 - 확인 : sudo systemctl status sshd
 - 접속 : ssh 사용자ID@서버IP (Ex. ssh choi@192.168.64.2)
+
+### Java 설치
+- sudo apt-get install openjdk-11-jdk
+
+### Kafka 설치
+- https://www.confluent.io/ko-kr/previous-versions 접속 후 설치하고자 하는 버전 선택.
+- 설치 : wget https://packages.confluent.io/archive/7.1/confluent-community-7.1.2.tar.gz?_ga=2.263210127.226026469.1712993899-2038344508.1712993899&_gl=1*p5wvuk*_ga*MjAzODM0NDUwOC4xNzEyOTkzODk5*_ga_D2D3EGKSGD*MTcxMjk5Mzg5OC4xLjEuMTcxMjk5MzkxOS4zOS4wLjA
+- 설치파일 이름 변경 : mv 'confluent-community-7.1.2.tar.gz?_ga=2.263210127.226026469.1712993899-2038344508.1712993899' confluent-commu.tar.gz
+- 압축 해제 : tar -xvf confluent-commu.tar.gz
