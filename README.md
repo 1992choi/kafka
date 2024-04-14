@@ -17,6 +17,11 @@
 - Consumer
   - 토픽에서 메시지를 읽는 역할을 한다.
   - 여러 개의 Consumer들로 구성될 경우, 어떤 브로커의 파티션에서 메시지를 읽어들일지 전략적으로 결정한다.
+### 메시지
+- 메시지는 Producer를 통해 전송 시 파티셔너를 통해 토픽의 어떤 파티션으로 전송되어야 할 지 미리 결정된다.
+- Topic이 여러 개의 파티션을 가질 때, 메시지의 전송 순서가 보장되지 않은 채로 Consumer에서 읽혀질 수 있다. (파티션 내에서의 순서는 보장된다.)
+- Key값을 가지지 않는 경우, 라운드 로빈, 스티키 파티션 등의 파티션 전략 등이 선택되어 파티션 별로 메시지가 전송될 수 있다.
+- Key값을 가지는 경우, 특정 파티션으로 고정되어 전송된다.
 
 <br><hr><br>
 
@@ -78,3 +83,8 @@
   - 조회
     - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic
     - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning (처음 접속 시, 오래된 offset부터 가져오기)
+  - Key를 가지는 메시지 전송
+    - kafka-console-producer --bootstrap-server localhost:9092 --topic test-topic --property key.separator=: --property parse.key=true
+  - Key를 가지는 메시지 조회
+    - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --property print.key=true --property print.value=true --from-beginning
+   
