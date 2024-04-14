@@ -99,3 +99,6 @@
   - Consumer Group 상세
     - kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group 그룹명
     - 위의 명령어를 사용하여 LAG 정보를 통해 밀려있는 메시지를 확인할 수 있다.
+  - Consumer Group 삭제
+    - Group 내 Consumer들이 없을 경우, 일정 시간이 지나면 자동으로 삭제되지만 아래 명령어를 통해 즉시 삭제할 수도 있다.
+    - kafka-consumer-groups --bootstrap-server localhost:9092 --delete --group group_01
