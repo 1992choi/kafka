@@ -17,6 +17,9 @@
 - Consumer
   - 토픽에서 메시지를 읽는 역할을 한다.
   - 여러 개의 Consumer들로 구성될 경우, 어떤 브로커의 파티션에서 메시지를 읽어들일지 전략적으로 결정한다.
+- Consumer Group과 Consumer
+  - 모든 Consumer들은 단 하나의 Consumer Group에 소속되어야 하며, Consumer Group은 1개 이상의 Consumer를 가질 수 있다.
+  - Consumer Group 내에 Consumer 변화가 있을 시 마다 파티션과 Consumer의 조합을 변경하는 Rebalancing이 발생한다.
 ### 메시지
 - 메시지는 Producer를 통해 전송 시 파티셔너를 통해 토픽의 어떤 파티션으로 전송되어야 할 지 미리 결정된다.
 - Topic이 여러 개의 파티션을 가질 때, 메시지의 전송 순서가 보장되지 않은 채로 Consumer에서 읽혀질 수 있다. (파티션 내에서의 순서는 보장된다.)
@@ -28,8 +31,7 @@
 ## 환경 구축
 ### 우분투 설치
 - https://velog.io/@suzu11/Mac-M1-%EC%97%90%EC%84%9C-%EC%9A%B0%EB%B6%84%ED%88%AC-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-UTM
-### 우분투 고정 IP 할당
-- 
+
 ### 우분투 SSH 설정
 - 설치
   - sudo apt-get install openssh-server
@@ -87,4 +89,5 @@
     - kafka-console-producer --bootstrap-server localhost:9092 --topic test-topic --property key.separator=: --property parse.key=true
   - Key를 가지는 메시지 조회
     - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --property print.key=true --property print.value=true --from-beginning
-   
+  - Partition 번호와 함께 조회
+    - kafka-console-consumer --bootstrap-server localhost:9092 --topic multipart-topic --from-beginning --property print.partition=true 
