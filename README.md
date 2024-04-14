@@ -90,4 +90,12 @@
   - Key를 가지는 메시지 조회
     - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --property print.key=true --property print.value=true --from-beginning
   - Partition 번호와 함께 조회
-    - kafka-console-consumer --bootstrap-server localhost:9092 --topic multipart-topic --from-beginning --property print.partition=true 
+    - kafka-console-consumer --bootstrap-server localhost:9092 --topic multipart-topic --from-beginning --property print.partition=true
+- Consumer Group
+  - Consumer Group ID가 'group_01'을 가지는 consumer를 생성
+    - kafka-console-consumer --bootstrap-server localhost:9092 --group group_01 --topic multipart-topic --property print.key=true --property print.value=true --property print.partition=true
+  - Consumer Group 목록
+    - kafka-consumer-groups --bootstrap-server localhost:9092 --list
+  - Consumer Group 상세
+    - kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group 그룹명
+    - 위의 명령어를 사용하여 LAG 정보를 통해 밀려있는 메시지를 확인할 수 있다.
