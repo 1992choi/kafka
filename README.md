@@ -72,3 +72,9 @@
     - kafka-topics --bootstrap-server localhost:9092 --describe --topic test_topic_02
   - 삭제
     - kafka-topics --bootstrap-server localhost:9092 --delete --topic test_topic_02
+- 메시지
+  - 전송
+    - kafka-console-producer --bootstrap-server localhost:9092 --topic test-topic
+  - 조회
+    - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic
+    - kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --from-beginning (처음 접속 시, 오래된 offset부터 가져오기)
