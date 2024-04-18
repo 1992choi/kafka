@@ -25,6 +25,24 @@
 - Topic이 여러 개의 파티션을 가질 때, 메시지의 전송 순서가 보장되지 않은 채로 Consumer에서 읽혀질 수 있다. (파티션 내에서의 순서는 보장된다.)
 - Key값을 가지지 않는 경우, 라운드 로빈, 스티키 파티션 등의 파티션 전략 등이 선택되어 파티션 별로 메시지가 전송될 수 있다.
 - Key값을 가지는 경우, 특정 파티션으로 고정되어 전송된다.
+### Producer와 acks 설정
+- Producer는 해당 Topic의 Partition의 Leader Broker에게만 메시지를 보낸다.
+- acks 설정에 따른 send 방식은 아래와 같다.
+  - acks 0
+    - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/02bc14b1-7e88-41fa-8ee2-b8eac07879c0)
+    - Producer는 Leader broker가 메시지 A를 정상적으로 받았는지에 대한 Ack 메시지를 받지 않고 다음 메시지인 메시지 B를 바로 전송한다.
+    - 메시지가 제대로 전송되었는지 브로커로부터 확인을 받지 않기 때문에 메시지가 브로커에 기록되지 않더라도 재전송하지 않는다.
+    - 메시지 손실의 우려가 가장 크지만 가장 빠르게 전송할 수 있다.
+  - acks 1
+    - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/8caf825e-2e35-4f17-95e8-6b616df672d9)
+    - Producer는 Leader broker가 메시지 A를 정상적으로 받았는지에 대한 Ack 메시지를 받은 후 다음 메시지인 메시지 B를 바로 전송. 만약 오류 메시지를 브로커로부터 받으면 메시지 A를 재전송한다.
+    - 메시지 A가 모든 Replicator에 완벽하게 복사되었는지의 여부는 확인하지 않고 메시지 B를 전송한다.
+    - 만약 Leader가 메시지를 복제 중에 다운될 경우 다음 Leader가 될 브로커에는 메시지가 없을 수 있기 때문에 메시지를 소실할 우려가 있다.
+  - acks all(=acks -1)
+    - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/46f12045-8d8e-4153-81f6-69ff0234ce3c)
+    - Producer는 Leader broker가 메시지 A를 정상적으로 받은 뒤 min.insync.replicas 개수 만큼의 Replicator에 복제를 수행한 뒤에 보내는 Ack 메시지를 받은 후 다음 메시지인 메시지 B를 바로 전송하고, 만약 오류 메시지를 브로커로부터 받으면 메시지 A를 재전송한다.
+    - 메시지 A가 모든 Replicator에 완벽하게 복사되었는지의 여부까지 확인 후에 메시지 B를 전송한다.
+    - 메시지 손실이 되지 않도록 모든 장애 상황을 감안한 전송 모드이지만 Ack를 오래 기다려야 하므로 상대적으로 전송속도가 느리다.
 
 <br><hr><br>
 
