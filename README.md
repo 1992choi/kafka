@@ -43,6 +43,16 @@
     - Producer는 Leader broker가 메시지 A를 정상적으로 받은 뒤 min.insync.replicas 개수 만큼의 Replicator에 복제를 수행한 뒤에 보내는 Ack 메시지를 받은 후 다음 메시지인 메시지 B를 바로 전송하고, 만약 오류 메시지를 브로커로부터 받으면 메시지 A를 재전송한다.
     - 메시지 A가 모든 Replicator에 완벽하게 복사되었는지의 여부까지 확인 후에 메시지 B를 전송한다.
     - 메시지 손실이 되지 않도록 모든 장애 상황을 감안한 전송 모드이지만 Ack를 오래 기다려야 하므로 상대적으로 전송속도가 느리다.
+### Producer와 Batch
+- ![image](https://github.com/Young-Geun/Kafka/assets/27760576/c6ccaf5c-85d5-4780-9fcc-26b2dd8d1fbd)
+- 메시지마다 매번 네트워크를 통해 전달하는 것은 비효율적이기 때문에 Producer는 지정된만큼 메시지를 저장했다가 한번에 브로커로 전달한다.
+- 배치를 책임지는 프로듀서 내부의 Record Accumulator(RA)는 각 토픽 파티션에 대응하는 배치 Queue를 구성하고 메시지들을 Record Batch 형태로 묶어 Queue에 저장한다.
+- 각 배치 Queue에 저장된 레코드 배치들은 때가 되면 각 각 브로커에 전달된다.
+- 주요 옵션
+  - linger.ms : Sender Thread로 메시지를 보내 기전 배치로 메시지를 만들어서 보내기 위한 최대 대기 시간
+  - buffer.memory : Record accumulator의 전체 메모리 사이즈
+  - batch.size : 단일 배치의 사이즈
+
 
 <br><hr><br>
 
