@@ -94,7 +94,9 @@ public class PizzaProducer {
         props.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
+        // props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
+        props.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, "32000");
+        props.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
 
         //KafkaProducer object creation
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<String, String>(props);
