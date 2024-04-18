@@ -52,7 +52,18 @@
   - linger.ms : Sender Thread로 메시지를 보내 기전 배치로 메시지를 만들어서 보내기 위한 최대 대기 시간
   - buffer.memory : Record accumulator의 전체 메모리 사이즈
   - batch.size : 단일 배치의 사이즈
-
+### Producer와 재전송
+- max.block.ms
+  - Send( ) 호출 시 Record Accumulator에 입력하지 못하고 block되는 최대 시간. 초과 시 Timeout Exception 발생.
+- linger.ms
+  - Sender Thread가 Record Accumulator에서 배치별로 가져가기 위한 최대 대기시간
+- request.timeout.ms
+  - 전송에 걸리는 최대 시간. 전송 재 시도 대기시간 제외.
+  - 초과시 retry를 하거나 Timout Exception 발생
+- retry.backoff.ms
+  - 전송 재 시도를 위한 대기 시간
+- deliver.timeout.ms
+  - Producer 메시지(배치) 전송에 허용된 최대 시간. 초과시 Timeout Exception 발생.
 
 <br><hr><br>
 
