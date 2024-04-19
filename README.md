@@ -70,6 +70,11 @@
 - 메시지 Sequence는 메시지의 고유번호로써 0부터 시작하여 순차적으로 증가하고, Producer ID는 Producer가 기동시마다 새롭게 생성된다.
 - 브로커에서 메시지 Sequece가 중복 될 경우, 이를 메시지 로그에 기록하지 않고 Ack만 전송한다.
 - 브로커는 Producer가 보낸 메시지의 Sequence가 브로커가 가지고 있는 메시지의 Sequence보다 1만큼 큰 경우에만 브로커에 저장한다.
+- Idempotence를 위한 Producer 설정
+  - enable.idempotence = true
+  - acks = all
+  - retries는 0 보다 큰 값
+  - max.in.flight.requests.per.connection은 1에서 5사이 값
 - 설정 시 유의사항
   - Kafka 3.0 버전부터는 Producer의 기본 설정이 Idempotence이다.
   - enable.idempotence의 값은 기본값이 true이다.
