@@ -94,9 +94,21 @@ public class PizzaProducer {
         props.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+        // ACK 설정 테스트
         // props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
-        props.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, "32000");
-        props.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
+
+        // BATCH 설정 테스트
+        // props.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, "32000");
+        //props.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
+
+        // 멱등성 설정 테스트 #1 - enable.idempotence를 명시적으로 선언하지 않고 잘못된 설정을 하면 기동은 되나 정상적으로 동작하지 않는다.
+        // props.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
+
+        // 멱등성 설정 테스트 #2 - enable.idempotence를 명시적으로 선언하고 잘못된 설정을 하면 기동되지 않는다.
+        //props.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
 
         //KafkaProducer object creation
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<String, String>(props);
