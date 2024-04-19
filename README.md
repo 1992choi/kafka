@@ -64,6 +64,17 @@
   - 전송 재 시도를 위한 대기 시간
 - deliver.timeout.ms
   - Producer 메시지(배치) 전송에 허용된 최대 시간. 초과시 Timeout Exception 발생.
+### Producer와 멱등성(Idempotent)
+- 멱등성 프로듀서는 동일한 데이터를 여러번 전송하더라도 카프카 클러스터에 단 한번만 저장됨을 의미한다.
+- 프로듀서는 브로커로부터 ACK를 받은 다음에 다음 메시지 전송하되, Producer ID와 메시지 Sequence를 Header에 저장하여 전송한다.
+- 메시지 Sequence는 메시지의 고유번호로써 0부터 시작하여 순차적으로 증가하고, Producer ID는 Producer가 기동시마다 새롭게 생성된다.
+- 브로커에서 메시지 Sequece가 중복 될 경우, 이를 메시지 로그에 기록하지 않고 Ack만 전송한다.
+- 브로커는 Producer가 보낸 메시지의 Sequence가 브로커가 가지고 있는 메시지의 Sequence보다 1만큼 큰 경우에만 브로커에 저장한다.
+- 설정 시 유의사항
+  - Kafka 3.0 버전부터는 Producer의 기본 설정이 Idempotence이다.
+  - enable.idempotence의 값은 기본값이 true이다.
+  - enable.idempotence=true를 명시적으로 서술하지 않고, 다른 파라미터를 잘못 설정하면 Producer는 정상적으로 메시지를 보내지만 idempotence로는 동작하지 않는다.
+  - enable.idempotence=true를 명시적으로 서술하고, 다른 파라미터를 잘못 설정하면 Config 오류가 발생하며 Producer가 기동되지 않는다.
 
 <br><hr><br>
 
