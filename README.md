@@ -80,6 +80,15 @@
   - enable.idempotence의 값은 기본값이 true이다.
   - enable.idempotence=true를 명시적으로 서술하지 않고, 다른 파라미터를 잘못 설정하면 Producer는 정상적으로 메시지를 보내지만 idempotence로는 동작하지 않는다.
   - enable.idempotence=true를 명시적으로 서술하고, 다른 파라미터를 잘못 설정하면 Config 오류가 발생하며 Producer가 기동되지 않는다.
+### Consumer와 subscribe, poll, commit
+- ![image](https://github.com/Young-Geun/Kafka/assets/27760576/6d794505-2bf7-45a4-8f0d-4cefffc84002)
+- subscribe
+  - Consumer는 subscribe()를 호출하여 읽어 들이려는 토픽을 등록한다.
+- poll
+  - Consumer는 poll( ) 메소드를 이용하여 주기적으로 브로커의 토픽 파티션에서 메시지를 가져온다. 
+- commit
+  - 메시지를 성공적으로 가져 왔으면 commit을 통해서 __consumer_offse에 다음에 읽을 offset 위치를 기재한다.
+
 
 <br><hr><br>
 
