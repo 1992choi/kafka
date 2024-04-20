@@ -88,6 +88,22 @@
   - Consumer는 poll( ) 메소드를 이용하여 주기적으로 브로커의 토픽 파티션에서 메시지를 가져온다. 
 - commit
   - 메시지를 성공적으로 가져 왔으면 commit을 통해서 __consumer_offse에 다음에 읽을 offset 위치를 기재한다.
+### Consumer 구성요소와 poll() 동작원리
+- 구성요소
+  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/b502dcdb-55f7-4d38-9907-256e3b5f14fd)
+  - Fetcher & ConsumerNetworkClient
+    - 2개의 컴포넌트를 통해, 파티션의 데이터를 해당 컨슈머 클라이언트로 가져온다.
+  - SubscriptionState
+    - 파티션의 구독 상태를 관리한다.
+  - ConsumerCoordinator
+    - 해당 Consumer Group의 리더 컨슈머가 누구인지, 해당 컨슈머의 옵션 등을 관리한다.
+  - HeartBeat Thread
+    - 하트비트 체크를 위한 별도의 스레드.
+- poll() 동작원리
+  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/c4f9b68f-10cd-4b35-8996-d72aec142737)
+  - ConsumerNetworkClient는 비동기로 계속 브로커의 메시지를 가져와서 Linked Queue에 저장한다.
+  - Linked Queue에 데이터가 있을 경우, Fetcher는 데이터를 가져오고 반환하며 poll() 수행을 완료한다.
+  - Linked Queue에 데이터가 없을 경우, 1000ms까지 Broker에 메시지 요청 후 poll() 수행을 완료한다.
 
 
 <br><hr><br>
