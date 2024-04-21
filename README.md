@@ -118,6 +118,16 @@
   - 정적 멤버가 된 컨슈머 3번이 그룹에서 나갈 경우에도 파티션 2번이 다른 컨슈머로 재할당 되지 않는다.
   - 이 때 밀리초에 해당하는 세션 시간 내에 다시 합류하게 되면 파티션 2번이 Consumer 3번에게 다시 할당이 된다.
   - 만약 시간 안에 못 들어오게되면 Rebalance가 발생하고 2번 파티션이 다른 컨슈머로 이동된다.
+### Consumer Rebalancing 방식
+- Eager Rebalance
+  - Rebalancing이 실행되는 중에 모든 컨슈머가 읽기 작업을 멈추고 자신에게 할당된 모든 파티션에 대한 소유권을 포기한 뒤, Rejoin하는 방식이다.
+  - 모든 Consumer가 잠시 메시지를 읽지 않는 시간으로 인해 Lag가 상대적으로 크게 발생할 가능성 있다.
+  - 파티션 할당 전략(partition.assignment.stragegy)중 Range, Round Robin, Sticky 방식이 여기에 해당한다.
+- Incremental Cooperative Rebalance
+  - Rebalance 수행 시 기존 Consumer들의 모든 파티션 할당을 취소하지 않고, 대상이 되는 Consumer들에 대해서 파티션에 따라 점진적으로 Consumer를 할당하면서 Rebalance를 수행하는 방식이다.
+  - 파티션 할당 전략(partition.assignment.stragegy)중 Cooperative Sticky에 해당한다.
+### Consumer 파티션 할당 전략
+- https://baebalja.tistory.com/629
 
 
 
