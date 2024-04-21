@@ -109,6 +109,17 @@
   - Consumer Group내에 Consumer가 변경(추가, 종료 등)되면 Group Coordinator는 Consumer Group내의 Consumer들에게 파티션을 재할당하는 Rebalancing을 수행하도록 지시한다.
 - Rebalancing 절차(기존 Consumer 종료 예시)
   - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/3b3ed4df-6f63-433a-880b-f5d85fe271de)
+### Consumer 정적 그룹 멤버십 (Static Group MemberShip)
+- 필요성
+  - 많은 Consumer를 가지는 Consumer Group에서 Rebalance가 발생하면, 모든 Consumer들이 Rebalance를 수행하므로 많은 시간이 소모되고 대량 데이터 처리 시 Lag가 더 길어질 수 있다.
+- Static Group MemberShip
+  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/7bb62806-ab43-4abe-b939-e689be6b3ae6)
+  - 그룹 인스턴스 ID를 컨슈머 구성 값의 일부로 특정하게 되면 컨슈머는 정적 멤버가 된다.
+  - 정적 멤버가 된 컨슈머 3번이 그룹에서 나갈 경우에도 파티션 2번이 다른 컨슈머로 재할당 되지 않는다.
+  - 이 때 밀리초에 해당하는 세션 시간 내에 다시 합류하게 되면 파티션 2번이 Consumer 3번에게 다시 할당이 된다.
+  - 만약 시간 안에 못 들어오게되면 Rebalance가 발생하고 2번 파티션이 다른 컨슈머로 이동된다.
+
+
 
 <br><hr><br>
 
