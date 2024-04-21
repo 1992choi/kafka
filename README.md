@@ -126,6 +126,10 @@
 - Incremental Cooperative Rebalance
   - Rebalance 수행 시 기존 Consumer들의 모든 파티션 할당을 취소하지 않고, 대상이 되는 Consumer들에 대해서 파티션에 따라 점진적으로 Consumer를 할당하면서 Rebalance를 수행하는 방식이다.
   - 파티션 할당 전략(partition.assignment.stragegy)중 Cooperative Sticky에 해당한다.
+### Consumer 파티션 할당 전략
+- https://baebalja.tistory.com/629
+
+
 
 <br><hr><br>
 
