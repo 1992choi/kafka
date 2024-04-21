@@ -104,7 +104,11 @@
   - ConsumerNetworkClient는 비동기로 계속 브로커의 메시지를 가져와서 Linked Queue에 저장한다.
   - Linked Queue에 데이터가 있을 경우, Fetcher는 데이터를 가져오고 반환하며 poll() 수행을 완료한다.
   - Linked Queue에 데이터가 없을 경우, 1000ms까지 Broker에 메시지 요청 후 poll() 수행을 완료한다.
-
+### Group Coordinator와 Consumer Group
+- Group Coordinator와 Consumer Group 관계
+  - Consumer Group내에 Consumer가 변경(추가, 종료 등)되면 Group Coordinator는 Consumer Group내의 Consumer들에게 파티션을 재할당하는 Rebalancing을 수행하도록 지시한다.
+- Rebalancing 절차(기존 Consumer 종료 예시)
+  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/3b3ed4df-6f63-433a-880b-f5d85fe271de)
 
 <br><hr><br>
 
