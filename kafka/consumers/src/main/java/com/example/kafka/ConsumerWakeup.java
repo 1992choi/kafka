@@ -24,7 +24,10 @@ public class ConsumerWakeup {
         props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
         props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "group-01");
+        props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "group-01-static");
+
+        // Static Group Membership 옵션 : 인스턴스 기동시마다 1씩 증가해서 기동해야함. Ex) 1 -> 2 -> 3
+        props.setProperty(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, "3");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
         kafkaConsumer.subscribe(List.of(topicName));
