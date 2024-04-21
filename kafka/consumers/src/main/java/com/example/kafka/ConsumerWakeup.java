@@ -18,7 +18,7 @@ public class ConsumerWakeup {
     public static final Logger logger = LoggerFactory.getLogger(ConsumerWakeup.class.getName());
 
     public static void main(String[] args) {
-        String topicName = "simple-topic";
+        String topicName = "pizza-topic";
 
         Properties props = new Properties();
         props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
@@ -51,7 +51,7 @@ public class ConsumerWakeup {
                 ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(Duration.ofMillis(1000));
 
                 for (ConsumerRecord record : consumerRecords) {
-                    logger.info("record key:{},  partition:{}, record offset:{} record value:{}",
+                    logger.info("record key:{}, partition:{}, record offset:{}, record value:{}",
                             record.key(), record.partition(), record.offset(), record.value());
                 }
             }
