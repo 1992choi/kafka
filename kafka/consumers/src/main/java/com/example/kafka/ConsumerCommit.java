@@ -1,6 +1,7 @@
 package com.example.kafka;
 
 import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class ConsumerCommit {
@@ -53,7 +55,10 @@ public class ConsumerCommit {
         // pollAutoCommit(kafkaConsumer);
 
         // Manual Commit 테스트 - 동기 방식
-        pollCommitSync(kafkaConsumer);
+        // pollCommitSync(kafkaConsumer);
+
+        // Manual Commit 테스트 - 비동기 방식
+        pollCommitAsync(kafkaConsumer);
     }
 
     private static void pollAutoCommit(KafkaConsumer<String, String> kafkaConsumer) {
@@ -100,6 +105,34 @@ public class ConsumerCommit {
                 } catch (CommitFailedException e) {
                     logger.error(e.getMessage());
                 }
+            }
+        } catch (WakeupException e) {
+            logger.error("wakeup exception has been called");
+        } finally {
+            logger.info("finally consumer is closing");
+            kafkaConsumer.close();
+        }
+    }
+
+    private static void pollCommitAsync(KafkaConsumer<String, String> kafkaConsumer) {
+        int loopCnt = 0;
+        try {
+            while (true) {
+                ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(Duration.ofMillis(1000));
+                logger.info("##### loopCnt:{}, consumerRecords count:{}", loopCnt++, consumerRecords.count());
+                for (ConsumerRecord record : consumerRecords) {
+                    logger.info("record key:{}, partition:{}, record offset:{}, record value:{}",
+                            record.key(), record.partition(), record.offset(), record.value());
+                }
+
+                kafkaConsumer.commitAsync(new OffsetCommitCallback() {
+                    @Override
+                    public void onComplete(Map<TopicPartition, OffsetAndMetadata> map, Exception e) {
+                        if (e != null) {
+                            logger.error("offsets {} is not completed.", map, e);
+                        }
+                    }
+                });
             }
         } catch (WakeupException e) {
             logger.error("wakeup exception has been called");
