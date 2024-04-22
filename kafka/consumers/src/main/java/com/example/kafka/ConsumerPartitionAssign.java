@@ -22,12 +22,13 @@ public class ConsumerPartitionAssign {
         props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
         props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "group_pizza_assign_seek");
+        props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "group_pizza_assign_seek_v001");
         props.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
         TopicPartition topicPartition = new TopicPartition(topicName, 0);
         kafkaConsumer.assign(Arrays.asList(topicPartition));
+        kafkaConsumer.seek(topicPartition, 10L);
 
         // main thread
         Thread mainThread = Thread.currentThread();
@@ -46,10 +47,40 @@ public class ConsumerPartitionAssign {
             }
         });
 
-        pollCommitSync(kafkaConsumer);
+        // pollCommitSync(kafkaConsumer);
+
+        // 특정 offset부터 읽을 때 주의할 점 : groupId, commit -> 정합성 문제를 야기할 수 있다. (* 커밋을 하지 않으면 groupId를 유의할 필요는 없음)
+        pollNoCommit(kafkaConsumer);
     }
 
     private static void pollCommitSync(KafkaConsumer<String, String> kafkaConsumer) {
+        int loopCnt = 0;
+        try {
+            while (true) {
+                ConsumerRecords<String, String> consumerRecords = kafkaConsumer.poll(Duration.ofMillis(1000));
+                logger.info("##### loopCnt:{}, consumerRecords count:{}", loopCnt++, consumerRecords.count());
+                for (ConsumerRecord record : consumerRecords) {
+                    logger.info("record key:{}, partition:{}, record offset:{}, record value:{}",
+                            record.key(), record.partition(), record.offset(), record.value());
+                }
+
+                try {
+                    if (consumerRecords.count() > 0) {
+                        kafkaConsumer.commitSync();
+                    }
+                } catch (CommitFailedException e) {
+                    logger.error(e.getMessage());
+                }
+            }
+        } catch (WakeupException e) {
+            logger.error("wakeup exception has been called");
+        } finally {
+            logger.info("finally consumer is closing");
+            kafkaConsumer.close();
+        }
+    }
+
+    private static void pollNoCommit(KafkaConsumer<String, String> kafkaConsumer) {
         int loopCnt = 0;
         try {
             while (true) {
