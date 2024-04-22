@@ -128,8 +128,10 @@
   - 파티션 할당 전략(partition.assignment.stragegy)중 Cooperative Sticky에 해당한다.
 ### Consumer 파티션 할당 전략
 - https://baebalja.tistory.com/629
-
-
+### Consumer와 Auto Commit
+- https://junuuu.tistory.com/886
+### Consumer와 Manual Commit
+- https://mycup.tistory.com/437
 
 <br><hr><br>
 
