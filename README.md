@@ -130,7 +130,8 @@
 - https://baebalja.tistory.com/629
 ### Consumer와 Auto Commit
 - https://junuuu.tistory.com/886
-
+### Consumer와 Manual Commit
+- https://mycup.tistory.com/437
 
 <br><hr><br>
 
