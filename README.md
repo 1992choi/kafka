@@ -209,3 +209,15 @@
   - Consumer Group 삭제
     - Group 내 Consumer들이 없을 경우, 일정 시간이 지나면 자동으로 삭제되지만 아래 명령어를 통해 즉시 삭제할 수도 있다.
     - kafka-consumer-groups --bootstrap-server localhost:9092 --delete --group group_01
+
+### PostgreSQL
+- 설치
+  - sudo apt install postgresql postgresql-client
+- 종료
+  - sudo systemctl stop postgresql
+- 실행
+  - sudo systemctl start postgresql
+- Postgres 계정으로 전환
+  - sudo su - postgres
+- 데이터베이스 접속
+  - psql
