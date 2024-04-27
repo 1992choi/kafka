@@ -132,6 +132,8 @@
 - https://junuuu.tistory.com/886
 ### Consumer와 Manual Commit
 - https://mycup.tistory.com/437
+### Kafka Replication
+- https://colevelup.tistory.com/19
 
 <br><hr><br>
 
