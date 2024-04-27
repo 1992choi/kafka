@@ -88,10 +88,20 @@ public class PizzaProducer {
     }
 
     public static void main(String[] args) {
-        String topicName = "pizza-topic";
+        String topicName = "pizza-topic-p3r3";
 
         Properties props = new Properties();
-        props.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
+        /* Multi Brokers 접속 방법
+            - 각 각의 브로커들을 모두 접속하는 것이 아니라, 하나의 브로커에 접속을 하는 형태이다.
+              각 각의 브로커들은 동일한 메타 정보를 서로 공유하기 때문에 하나의 브로커에만 접속을 하더라도 구성을 알 수 있다.
+              그럼에도 불구하고 브로커의 접속 정보를 모두 명시하는 이유는
+              혹시 하나의 브로커가 다운되어서 접속을 못하는 경우를 대비하기 위함이다.
+              Ex) 192.168.64.2:9092만 명시해도 되지만, 192.168.64.2:9092가 다운되었을 경우는 192.168.64.2:9092로 접속이 불가능하니
+                  192.168.64.2:9093로 접속하여 메타 정보를 얻기 위함.
+        */
+        props.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092, 192.168.64.2:9093, 192.168.64.2:9094");
+
+        // props.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.64.2:9092");
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
@@ -104,11 +114,11 @@ public class PizzaProducer {
 
         // 멱등성 설정 테스트 #1 - enable.idempotence를 명시적으로 선언하지 않고 잘못된 설정을 하면 기동은 되나 정상적으로 동작하지 않는다.
         // props.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
-        props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
+        //props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
 
         // 멱등성 설정 테스트 #2 - enable.idempotence를 명시적으로 선언하고 잘못된 설정을 하면 기동되지 않는다.
         //props.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
-        props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
+        //props.setProperty(ProducerConfig.ACKS_CONFIG, "0");
 
         //KafkaProducer object creation
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<String, String>(props);
