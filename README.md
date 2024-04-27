@@ -180,12 +180,14 @@
     - kafka-topics --bootstrap-server localhost:9092 --create --topic welcome-topic
   - 생성 (파티션 3개짜리 토픽 생성)
     - kafka-topics --bootstrap-server localhost:9092 --create --topic test_topic_02 --partitions 3
+  - 생성 (다중 복제 토픽)
+    - kafka-topics --bootstrap-server localhost:9092 --create --topic topic-p3r3 --partitions 3 --replication-factor 3
   - 목록
     - kafka-topics --bootstrap-server localhost:9092 --list
   - 상세
     - kafka-topics --bootstrap-server localhost:9092 --describe --topic test_topic_02
   - 삭제
-    - kafka-topics --bootstrap-server localhost:9092 --delete --topic test_topic_02
+    - kafka-topics --bootstrap-server localhost:9092 --delete --topic test_topic_02 
 - 메시지
   - 전송
     - kafka-console-producer --bootstrap-server localhost:9092 --topic test-topic
