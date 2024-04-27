@@ -132,8 +132,12 @@
 - https://junuuu.tistory.com/886
 ### Consumer와 Manual Commit
 - https://mycup.tistory.com/437
-### Kafka Replication
+### Kafka Replication / ISR
 - https://colevelup.tistory.com/19
+### ZooKeeper
+- https://data-engineer-tech.tistory.com/4
+### Controller
+- https://velog.io/@comich1994/%EC%B9%B4%ED%94%84%EC%B9%B4-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC
 
 <br><hr><br>
 
