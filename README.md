@@ -222,6 +222,16 @@
     - Group 내 Consumer들이 없을 경우, 일정 시간이 지나면 자동으로 삭제되지만 아래 명령어를 통해 즉시 삭제할 수도 있다.
     - kafka-consumer-groups --bootstrap-server localhost:9092 --delete --group group_01
 
+### Kafka 모니터링
+- 컨플루언트 카프카 Local
+  - 설치
+    - wget https://packages.confluent.io/archive/7.2/confluent-7.2.1.tar.gz
+  - 실행
+    - cd {Confluent Local Home}/bin
+    - confluent local services start
+  - 접속
+    - http://{IP}:9091
+
 ### PostgreSQL
 - 설치
   - sudo apt install postgresql postgresql-client
