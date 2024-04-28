@@ -3,7 +3,11 @@
 <br><br>
 
 ## 개념 정리
-![image](https://github.com/Young-Geun/Kafka/assets/27760576/e5d88001-3adf-4b47-954a-eae9f5e125da)
+![image](https://github.com/Young-Geun/Kafka/assets/27760576/245b9781-48ca-441c-ac1c-a2113ec7ec17)
+### 정리 블로그
+- https://velog.io/@king3456/Apache-Kafka-%EA%B8%B0%EB%B3%B8%EA%B0%9C%EB%85%90
+- https://hoing.io/archives/5108
+- https://tscofet.oopy.io/3f00acc3-f40f-4103-8e14-a1491160aea8
 ### Topic
 - Topic은 파티션으로 구성된 일련의 로그 파일이다.
 - RDBMS의 테이블과 유사항 기능이다.
@@ -132,8 +136,12 @@
 - https://junuuu.tistory.com/886
 ### Consumer와 Manual Commit
 - https://mycup.tistory.com/437
-### Kafka Replication
+### Kafka Replication / ISR
 - https://colevelup.tistory.com/19
+### ZooKeeper
+- https://data-engineer-tech.tistory.com/4
+### Controller
+- https://velog.io/@comich1994/%EC%B9%B4%ED%94%84%EC%B9%B4-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC
 
 <br><hr><br>
 
@@ -213,6 +221,16 @@
   - Consumer Group 삭제
     - Group 내 Consumer들이 없을 경우, 일정 시간이 지나면 자동으로 삭제되지만 아래 명령어를 통해 즉시 삭제할 수도 있다.
     - kafka-consumer-groups --bootstrap-server localhost:9092 --delete --group group_01
+
+### Kafka 모니터링
+- 컨플루언트 카프카 Local
+  - 설치
+    - wget https://packages.confluent.io/archive/7.2/confluent-7.2.1.tar.gz
+  - 실행
+    - cd {Confluent Local Home}/bin
+    - confluent local services start
+  - 접속
+    - http://{IP}:9091
 
 ### PostgreSQL
 - 설치
