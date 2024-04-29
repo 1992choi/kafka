@@ -142,6 +142,9 @@
 - https://data-engineer-tech.tistory.com/4
 ### Controller
 - https://velog.io/@comich1994/%EC%B9%B4%ED%94%84%EC%B9%B4-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC
+### 로그 세그먼트
+- https://westlife0615.tistory.com/514
+- https://bigdatalab.tistory.com/10
 
 <br><hr><br>
 
