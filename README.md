@@ -145,6 +145,8 @@
 ### 로그 세그먼트
 - https://westlife0615.tistory.com/514
 - https://bigdatalab.tistory.com/10
+### 로그 컴팩션
+- https://www.youtube.com/watch?v=VAkhYxu1qII
 
 <br><hr><br>
 
