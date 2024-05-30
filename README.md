@@ -3,7 +3,7 @@
 <br><br>
 
 ## 개념 정리
-![image](https://github.com/Young-Geun/Kafka/assets/27760576/245b9781-48ca-441c-ac1c-a2113ec7ec17)
+![image](https://github.com/1992choi/kafka/assets/27760576/245b9781-48ca-441c-ac1c-a2113ec7ec17)
 ### 정리 블로그
 - https://velog.io/@king3456/Apache-Kafka-%EA%B8%B0%EB%B3%B8%EA%B0%9C%EB%85%90
 - https://hoing.io/archives/5108
@@ -33,22 +33,22 @@
 - Producer는 해당 Topic의 Partition의 Leader Broker에게만 메시지를 보낸다.
 - acks 설정에 따른 send 방식은 아래와 같다.
   - acks 0
-    - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/02bc14b1-7e88-41fa-8ee2-b8eac07879c0)
+    - ![image](https://github.com/1992choi/kafka/assets/27760576/02bc14b1-7e88-41fa-8ee2-b8eac07879c0)
     - Producer는 Leader broker가 메시지 A를 정상적으로 받았는지에 대한 Ack 메시지를 받지 않고 다음 메시지인 메시지 B를 바로 전송한다.
     - 메시지가 제대로 전송되었는지 브로커로부터 확인을 받지 않기 때문에 메시지가 브로커에 기록되지 않더라도 재전송하지 않는다.
     - 메시지 손실의 우려가 가장 크지만 가장 빠르게 전송할 수 있다.
   - acks 1
-    - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/8caf825e-2e35-4f17-95e8-6b616df672d9)
+    - ![image](https://github.com/1992choi/kafka/assets/27760576/8caf825e-2e35-4f17-95e8-6b616df672d9)
     - Producer는 Leader broker가 메시지 A를 정상적으로 받았는지에 대한 Ack 메시지를 받은 후 다음 메시지인 메시지 B를 바로 전송. 만약 오류 메시지를 브로커로부터 받으면 메시지 A를 재전송한다.
     - 메시지 A가 모든 Replicator에 완벽하게 복사되었는지의 여부는 확인하지 않고 메시지 B를 전송한다.
     - 만약 Leader가 메시지를 복제 중에 다운될 경우 다음 Leader가 될 브로커에는 메시지가 없을 수 있기 때문에 메시지를 소실할 우려가 있다.
   - acks all(=acks -1)
-    - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/46f12045-8d8e-4153-81f6-69ff0234ce3c)
+    - ![image](https://github.com/1992choi/kafka/assets/27760576/46f12045-8d8e-4153-81f6-69ff0234ce3c)
     - Producer는 Leader broker가 메시지 A를 정상적으로 받은 뒤 min.insync.replicas 개수 만큼의 Replicator에 복제를 수행한 뒤에 보내는 Ack 메시지를 받은 후 다음 메시지인 메시지 B를 바로 전송하고, 만약 오류 메시지를 브로커로부터 받으면 메시지 A를 재전송한다.
     - 메시지 A가 모든 Replicator에 완벽하게 복사되었는지의 여부까지 확인 후에 메시지 B를 전송한다.
     - 메시지 손실이 되지 않도록 모든 장애 상황을 감안한 전송 모드이지만 Ack를 오래 기다려야 하므로 상대적으로 전송속도가 느리다.
 ### Producer와 Batch
-- ![image](https://github.com/Young-Geun/Kafka/assets/27760576/c6ccaf5c-85d5-4780-9fcc-26b2dd8d1fbd)
+- ![image](https://github.com/1992choi/kafka/assets/27760576/c6ccaf5c-85d5-4780-9fcc-26b2dd8d1fbd)
 - 메시지마다 매번 네트워크를 통해 전달하는 것은 비효율적이기 때문에 Producer는 지정된만큼 메시지를 저장했다가 한번에 브로커로 전달한다.
 - 배치를 책임지는 프로듀서 내부의 Record Accumulator(RA)는 각 토픽 파티션에 대응하는 배치 Queue를 구성하고 메시지들을 Record Batch 형태로 묶어 Queue에 저장한다.
 - 각 배치 Queue에 저장된 레코드 배치들은 때가 되면 각 각 브로커에 전달된다.
@@ -85,7 +85,7 @@
   - enable.idempotence=true를 명시적으로 서술하지 않고, 다른 파라미터를 잘못 설정하면 Producer는 정상적으로 메시지를 보내지만 idempotence로는 동작하지 않는다.
   - enable.idempotence=true를 명시적으로 서술하고, 다른 파라미터를 잘못 설정하면 Config 오류가 발생하며 Producer가 기동되지 않는다.
 ### Consumer와 subscribe, poll, commit
-- ![image](https://github.com/Young-Geun/Kafka/assets/27760576/6d794505-2bf7-45a4-8f0d-4cefffc84002)
+- ![image](https://github.com/1992choi/kafka/assets/27760576/6d794505-2bf7-45a4-8f0d-4cefffc84002)
 - subscribe
   - Consumer는 subscribe()를 호출하여 읽어 들이려는 토픽을 등록한다.
 - poll
@@ -94,7 +94,7 @@
   - 메시지를 성공적으로 가져 왔으면 commit을 통해서 __consumer_offse에 다음에 읽을 offset 위치를 기재한다.
 ### Consumer 구성요소와 poll() 동작원리
 - 구성요소
-  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/b502dcdb-55f7-4d38-9907-256e3b5f14fd)
+  - ![image](https://github.com/1992choi/kafka/assets/27760576/b502dcdb-55f7-4d38-9907-256e3b5f14fd)
   - Fetcher & ConsumerNetworkClient
     - 2개의 컴포넌트를 통해, 파티션의 데이터를 해당 컨슈머 클라이언트로 가져온다.
   - SubscriptionState
@@ -104,7 +104,7 @@
   - HeartBeat Thread
     - 하트비트 체크를 위한 별도의 스레드.
 - poll() 동작원리
-  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/c4f9b68f-10cd-4b35-8996-d72aec142737)
+  - ![image](https://github.com/1992choi/kafka/assets/27760576/c4f9b68f-10cd-4b35-8996-d72aec142737)
   - ConsumerNetworkClient는 비동기로 계속 브로커의 메시지를 가져와서 Linked Queue에 저장한다.
   - Linked Queue에 데이터가 있을 경우, Fetcher는 데이터를 가져오고 반환하며 poll() 수행을 완료한다.
   - Linked Queue에 데이터가 없을 경우, 1000ms까지 Broker에 메시지 요청 후 poll() 수행을 완료한다.
@@ -112,12 +112,12 @@
 - Group Coordinator와 Consumer Group 관계
   - Consumer Group내에 Consumer가 변경(추가, 종료 등)되면 Group Coordinator는 Consumer Group내의 Consumer들에게 파티션을 재할당하는 Rebalancing을 수행하도록 지시한다.
 - Rebalancing 절차(기존 Consumer 종료 예시)
-  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/3b3ed4df-6f63-433a-880b-f5d85fe271de)
+  - ![image](https://github.com/1992choi/kafka/assets/27760576/3b3ed4df-6f63-433a-880b-f5d85fe271de)
 ### Consumer 정적 그룹 멤버십 (Static Group MemberShip)
 - 필요성
   - 많은 Consumer를 가지는 Consumer Group에서 Rebalance가 발생하면, 모든 Consumer들이 Rebalance를 수행하므로 많은 시간이 소모되고 대량 데이터 처리 시 Lag가 더 길어질 수 있다.
 - Static Group MemberShip
-  - ![image](https://github.com/Young-Geun/Kafka/assets/27760576/7bb62806-ab43-4abe-b939-e689be6b3ae6)
+  - ![image](https://github.com/1992choi/kafka/assets/27760576/7bb62806-ab43-4abe-b939-e689be6b3ae6)
   - 그룹 인스턴스 ID를 컨슈머 구성 값의 일부로 특정하게 되면 컨슈머는 정적 멤버가 된다.
   - 정적 멤버가 된 컨슈머 3번이 그룹에서 나갈 경우에도 파티션 2번이 다른 컨슈머로 재할당 되지 않는다.
   - 이 때 밀리초에 해당하는 세션 시간 내에 다시 합류하게 되면 파티션 2번이 Consumer 3번에게 다시 할당이 된다.
