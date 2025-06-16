@@ -1,4 +1,4 @@
-rootProject.name = 'kafka'
+rootProject.name = 'confluent'
 include 'producers'
 include 'consumers'
 include 'practice'
