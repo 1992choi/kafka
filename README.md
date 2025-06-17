@@ -2,6 +2,6 @@
 
 ## Inflearn 카프카 학습
 - 카프카 완벽 가이드(코어편)
-  - confluent 폴더 및 Confluent.md
+  - confluent 디렉토리
 - [아파치 카프카 애플리케이션 프로그래밍] 개념부터 컨슈머, 프로듀서, 커넥트, 스트림즈까지!
-  - apache 폴더 및 Apache.md  
+  - apache 디렉토리
