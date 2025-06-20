@@ -130,3 +130,24 @@
   - 만약 메타데이터가 현재의 파티션 상태에 맞게 refresh 되지 않은 상태에서 잘못된 브로커로 데이터를 요청하면 LEADER_NOT_AVAILABLE 예외가 발생한다.
   - 이는 브로커에 리더 파티션이 없는 경우 나타나며, 대부분 메타데이터 refresh 이슈로 발생한다.
   - 이러한 예외가 자주 발생하면, 메타데이터 refresh 간격을 확인해봐야한다.
+
+
+<br><br>
+
+## 카프카 CLI 실습
+### 기본 환경 구성
+- 아파치 카프카 다운로드
+- 카프카 홈에 data 디렉토리 생성
+  - 카프카가 설치된 경로는 {kafka_home}이라고 지칭할 예정
+- {kafka_home}/config/server.properties 수정
+  - listeners=PLAINTEXT://localhost:9092
+  - advertised.listeners=PLAINTEXT://localhost:9092
+  - log.dirs={kafka_home}/data
+
+### 실행
+- 주키퍼 실행
+  - cd {kafka_home}
+  - bin/zookeeper-server-start.sh config/zookeeper.properties
+- 카프카 실행
+  - cd {kafka_home}
+  - bin/kafka-server-start.sh config/server.properties
