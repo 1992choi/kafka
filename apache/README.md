@@ -144,10 +144,44 @@
   - advertised.listeners=PLAINTEXT://localhost:9092
   - log.dirs={kafka_home}/data
 
-### 실행
+### 주키퍼 및 카프카 실행
 - 주키퍼 실행
   - cd {kafka_home}
   - bin/zookeeper-server-start.sh config/zookeeper.properties
 - 카프카 실행
   - cd {kafka_home}
   - bin/kafka-server-start.sh config/server.properties
+
+### topic
+- 토픽 생성
+  - 클러스터 정보와 토픽 이름은 필수 값이다.
+  - 파티션 개수, 복제 개수 등 다양한 옵션도 존재하지만, 값을 주지 않는다면 브로커에 설정된 기본 값으로 생성된다.
+  - ``` 기본생성
+    bin/kafka-topics.sh --create \
+    --bootstrap-server localhost:9092 \
+    --topic hello.kafka
+    ```
+  - ``` 다양한 옵션을 통해 생성
+    bin/kafka-topics.sh --create \
+    --bootstrap-server localhost:9092 \
+    --partitions 10 \
+    --replication-factor 1 \
+    --topic hello.kafka2 \
+    --config retention.ms=172800000
+    ```
+- 토픽 리스트 조회
+  - ```
+    bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+    ```
+- 토픽 상세조회
+  - ```
+    bin/kafka-topics.sh --bootstrap-server localhost:9092 --topic hello.kafka \
+    --describe
+    ```
+- 파티션 개수 늘리기
+  - 파티션 개수를 늘리기 위해서는 --alter 옵션을 사용하면 된다.
+    - 단, 늘어난 개수보다 작은 숫자를 지정하면 오류가 발생한다.
+  - ```
+    bin/kafka-topics.sh --bootstrap-server localhost:9092 --topic hello.kafka \
+    --alter --partitions 4
+    ```
