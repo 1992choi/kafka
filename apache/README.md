@@ -205,3 +205,46 @@
       >key2:value2
       >key3:value3
       ```
+      
+### 컨슈머
+- 데이터 컨슘
+  - 가장 처음 데이터부터 컨슘
+    - from-beginning 옵션을 사용하여 가장 처음 생성된 데이터부터 컨슘할 수 있다.
+    - ```
+      bin/kafka-console-consumer.sh \
+      --bootstrap-server localhost:9092 \
+      --topic hello.kafka --from-beginning
+      ```
+  - 키와 메시지 확인
+    - property 옵션을 사용해서 key와 value를 모두 확인할 수 있다.
+    - ```
+      bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
+      --topic hello.kafka \
+      --property print.key=true \
+      --property key.separator="-" \
+      --from-beginning
+      ```
+  - 최대 컨슘 메시지 제한
+    - max-messages 옵션을 사용해서 최대 컨슘 메시지를 제한할 수 있다.
+    - ```
+      bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
+      --topic hello.kafka --from-beginning --max-messages 3
+      ```
+  - 특정 파티션만 컨슘
+    - partition 옵션을 사용해서 특정 파티션만 컨슘할 수 있다.
+    - ```
+      bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
+      --topic hello.kafka \
+      --partition 2 \
+      --from-beginning
+      ```
+  - 컨슈머 그룹 기반 컨슘
+    - group 옵션을 사용해서 컨슈머 그룹을 기반으로 컨슘할 수 있다.
+    - 컨슈머 그룹이란 특정 목적을 가진 컨슈머들을 묶음으로 사용하는 것을 의미한다.
+    - 컨슈머 그룹으로 토픽의 메시지를 가져올 경우, 어느 레코드까지 읽었는에 대한 데이터가 카프카 브로커에 저장된다.
+    - ```
+      bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
+      --topic hello.kafka \
+      --group hello-group \
+      --from-beginning
+      ```
