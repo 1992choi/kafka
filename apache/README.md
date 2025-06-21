@@ -185,3 +185,23 @@
     bin/kafka-topics.sh --bootstrap-server localhost:9092 --topic hello.kafka \
     --alter --partitions 4
     ```
+    
+### 프로듀서
+- 데이터 생성
+  - 메시지 value만 사용하는 경우 
+    - ```
+      bin/kafka-console-producer.sh --bootstrap-server localhost:9092 \
+      --topic hello.kafka
+      ```
+  - 메시지 key와 value를 함께 사용하는 경우
+    - key.separator를 선언하지 않으면 기본설정은 Tab이고, 설정을 하면 설정한 값으로 구분자를 명시할 수 있다.
+    - ```
+      bin/kafka-console-producer.sh --bootstrap-server localhost:9092 \
+      --topic hello.kafka \
+      --property "parse.key=true" \
+      --property "key.separator=:"
+      
+      >key1:value1
+      >key2:value2
+      >key3:value3
+      ```
