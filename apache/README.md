@@ -248,3 +248,46 @@
       --group hello-group \
       --from-beginning
       ```
+- 컨슈머 그룹
+  - 컨슈머 그룹 생성
+    - 컨슈머 그룹은 따로 생성하지 않고, 컨슈머를 동작할 때 컨슈머 그룹 이름을 지정하면 새로 생성된다.
+    - 새로 생성된 컨슈머 그룹 리스트는 kafka-consumer-groups.sh 로 확인할 수 있다.
+  - 컨슈머 그룹 목록 조회
+    - ```
+      bin/kafka-consumer-groups.sh \
+      --bootstrap-server localhost:9092 \
+      --list
+      ```
+  - 컨슈머 그룹 상세 조회
+    - describe 옵션을 사용하면 상세 상태를 확인할 수 있다.
+    - 해당 컨슈머 그룹이 어떤 토픽을 대상으로 레코드를 가지고 갔는지, 파티션 번호, 현재까지 가져간 레코드의 오프셋, 파티션의 마지막 오프셋, 컨슈머 랙 등을 확인할 수 있다.
+    - ```
+      bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
+      --group hello-group --describe
+      ```
+  - 오프셋 리셋
+    - reset-offsets 옵션을 사용해서 오프셋을 리셋할 수 있다.
+      - 해당 컨슈머가 읽을 메시지의 시작 지점을 조정하는 것을 의미한다.
+      - 이 기능은 특정 토픽을 다시 읽거나 테스트할 때 자주 사용됩니다.
+    - ```
+      bin/kafka-consumer-groups.sh \
+      --bootstrap-server my-kafka:9092 \
+      --group hello-group \
+      --topic hello.kafka \
+      --reset-offsets --to-earliest --execute
+      ```
+      - 옵션
+        - --to-earliest
+          - 해당 파티션의 가장 오래된 오프셋(처음부터)으로 리셋
+        - --to-latest  
+          - 가장 최신 오프셋(현재 이후)으로 리셋
+        - --to-offset
+          - 특정 숫자 오프셋으로 리셋
+        - --shift-by {-/+ n}
+          - 현재 오프셋에서 앞/뒤로 n만큼 이동
+        - --to-current
+          - 현재 커밋된 오프셋 그대로 유지
+        - --to-datetime {timestamp}  
+          - 지정된 날짜/시간 이후의 가장 가까운 오프셋으로 리셋
+        - --by-duration {duration}
+          - 현재 시간에서 지정된 기간 전의 오프셋으로 리셋
