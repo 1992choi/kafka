@@ -271,7 +271,7 @@
       - 이 기능은 특정 토픽을 다시 읽거나 테스트할 때 자주 사용됩니다.
     - ```
       bin/kafka-consumer-groups.sh \
-      --bootstrap-server my-kafka:9092 \
+      --bootstrap-server localhost:9092 \
       --group hello-group \
       --topic hello.kafka \
       --reset-offsets --to-earliest --execute
@@ -291,3 +291,31 @@
           - 지정된 날짜/시간 이후의 가장 가까운 오프셋으로 리셋
         - --by-duration {duration}
           - 현재 시간에서 지정된 기간 전의 오프셋으로 리셋
+- 그 외 커맨드 라인
+  - kafka-producer-perf-test.sh 
+    - 카프카 프로듀서로 퍼포먼스를 측정할 때 사용된다.
+    - ```
+      bin/kafka-producer-perf-test.sh \
+      --producer-props bootstrap.servers=localhost:9092 \
+      --topic hello.kafka \
+      --num-records 10 \
+      --throughput 1 \
+      --record-size 100 \
+      --print-metric
+      ```
+  - kafka-consumer-perf-test.sh
+    - 카프카 컨슈머로 퍼포먼스를 측정할 때 사용된다.
+    - ```
+      bin/kafka-consumer-perf-test.sh \
+      --bootstrap-server localhost:9092 \
+      --topic hello.kafka \
+      --messages 10 \
+      --show-detailed-stats
+      ```
+  - kafka-dump-log.sh
+    - 카프카의 덤프 로그를 확인할 때 사용된다.
+    - ```
+      bin/kafka-dump-log.sh \
+      --files data/hello.kafka-0/00000000000000000000.log \
+      --deep-iteration
+      ```
