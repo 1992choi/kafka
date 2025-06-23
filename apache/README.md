@@ -148,7 +148,23 @@
       - 기본값으로는 DefaultPartitioner로 설정된다.
     - Accumulator
       - 배치로 묶어 전송할 데이터를 모으는 버퍼
-  
+- 파티셔너 종류
+  - 프로듀서 API를 사용하면 'RoundRobinPartitioner'와 'UniformStickyPartitioner'를 제공한다.
+  - 2.5 버전 이후부터는 파티셔너를 지정하지 않으면 UniformStickyPartitioner가 Default가 된다.
+  - 아래와 같은 동작 차이를 갖는다.
+    - 메시지 키가 있는 경우
+      - 두 방식 모두 메시지 키의 해시값과 파티션을 매칭하여 레코드를 전송한다.
+      - 즉 동일한 메시지 키가 존재하는 레코드는 동일한 파티션에 전달된다.
+      - 만약 파티션 개수가 변경되면, 메시지 키와 파티션 번호의 매칭이 깨지게 된다.
+    - 메시지 키가 없는 경우
+      - RoundRobinPartitioner
+        - ProducerRecord가 들어오는대로 파티션을 순회하면서 전송.
+        - Accumulator에서 묶이는 정도가 적기 때문에 전송 성능이 낮다.
+      - UniformStickyPartitioner
+        - Accumulator에서 레코드들이 배치로 묶일 때까지 기다렸다가 전송.
+          - RoundRobinPartitioner에 비해 향상된 성능을 갖는다.
+        - 배치로 묶일 뿐 결국 파티션을 순회하면서 보내기 때문에 모든 파티션에 분배되어 전송된다.
+  - 사용자 지정 파티셔너를 생성하기 위해 Partitioner 인터페이스를 제공하며, 이를 가지고 커스텀 파티셔너를 구현할 수 있다.
 
 <br><br>
 
