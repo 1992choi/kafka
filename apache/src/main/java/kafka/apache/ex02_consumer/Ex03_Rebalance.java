@@ -21,6 +21,9 @@ import java.util.Properties;
       - onPartitionsRevoked()
         - 리밸런스가 시작되기 직전에 호출되는 메서드이다.
         - 마지막으로 처리한 레코드를 기준으로 커밋을 하기 위해서는 리밸런스가 시작하기 직전에 커밋을 하면 되므로 onPartitionsRevoked()에서 커밋을 구현하여 처리할 수 있다.
+
+    - 테스트 방법
+      - 애플리케이션을 순차적으로 2개 이상 실행시킨 후 1개를 중지하면 리밸런싱이 일어난다.
  */
 public class Ex03_Rebalance {
 
