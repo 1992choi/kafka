@@ -220,6 +220,33 @@
     - 즉 동일한 데이터를 보내도 PID가 달라지기 때문에 브로커 입장에서는 다른 데이터를 간주할 수 밖에 없다.
     - 결론적으로 멱등성 프로듀서는 장애가 발생하지 않는 경우에만 유효하다는 의미이다.
 
+### 트랜잭션 프로듀서
+- 기본개념
+  - 카프카에서 트랜잭션은 다수의 파티션에 데이터를 저장할 경우, 모든 데이터에 대해 동일한 원자성을 만족시키기 위해 사용된다.
+- 트랜잭션 프로듀서
+  - 사용자가 보낸 데이터를 레코드로 파티션에 저장할 뿐만 아니라 트랜잭션의 시작과 끝을 표현하기 위해 트랜잭션 레코드를 한 개 더 보낸다.
+  - 트랜잭션 프로듀서를 동작하기 위해서는 transactional.id를 설정해야 한다.
+  - 프로듀서별로 고유한 ID값을 사용해야한다.
+  - ```
+    configs.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, UUID.randomUUID());    
+    Producer<String, String> producer = new KafkaProducer<>(configs); // 프로듀서별 고유한 ID 셋팅
+    
+    producer.initTransactions(); // 트랜잭션 초기화
+    
+    producer.beginTransaction(); // 트랜잭션 시작
+    producer.send(new ProducerRecord<>(TOPIC, "전달하는 메시지 값"));
+    producer.commitTransaction(); // 커밋
+    
+    producer.close();
+    ```
+- 트랜잭션 컨슈머
+  - 파티션에 저장된 트랜잭션 레코드를 보고 트랜잭션이 완료(commit) 되었음을 확인하고 데이터를 가져간다.
+  - 트랜잭션 컨슈머는 커밋이 완료된 레코드를 읽기 위해 isolation.level 옵션을 read_committed로 설정해야한다. (기본값은 read_uncommitted)
+  - ```
+    configs.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
+    KafkaConsumer<String, String> consumer = new KafkaConsumer<>(configs)
+    ```
+
 ### ISR(In-Sync-Replicas)와 acks 
 - ISR이란?
   - 리더 파티션과 데이터가 동기화되어 있는 팔로워(replica) 목록을 뜻한다.
